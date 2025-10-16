@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Writing Assistant Pro - Advanced Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <header class="options-header">
+      <h1>✨ AI Writing Assistant Pro - Advanced Settings</h1>
+      <p>Configure your Gemini API key and customize all 50+ features</p>
+    </header>
+
+    <!-- API Configuration -->
+    <section class="settings-section">
+      <h2>🔑 API Configuration</h2>
+      <div class="api-config">
+        <div class="input-group">
+          <label for="gemini-api-key">Gemini API Key</label>
+          <input type="password" id="gemini-api-key" placeholder="Enter your Gemini API key">
+          <button type="button" id="toggle-api-key" class="toggle-password">👁️</button>
+        </div>
+        <p class="api-help">Get your free API key from <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a></p>
+        <div class="api-status" id="api-status">
+          <span class="status-indicator" id="api-status-dot"></span>
+          <span id="api-status-text">Not configured</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="settings-section">
+      <h2>🎯 Core Writing Features</h2>
+      <div class="feature-grid">
+        <label class="feature-item">
+          <input type="checkbox" id="grammarCheck" checked>
+          <div class="feature-content">
+            <h3>Advanced Grammar Checking</h3>
+            <p>Real-time grammar error detection and correction</p>
+          </div>
+        </label>
+        <label class="feature-item">
+          <input type="checkbox" id="spellingMechanics" checked>
+          <div class="feature-content">
+            <h3>Spelling & Mechanics</h3>
+            <p>Multi-dialect spelling and punctuation correction</p>
+          </div>
+        </label>
+        <label class="feature-item">
+          <input type="checkbox" id="styleEnhancement" checked>
+          <div class="feature-content">
+            <h3>Style Enhancement</h3>
+            <p>Improve clarity, conciseness, and readability</p>
+          </div>
+        </label>
+        <label class="feature-item">
+          <input type="checkbox" id="textHumanization" checked>
+          <div class="feature-content">
+            <h3>AI Text Humanization</h3>
+            <p>Make AI-generated text sound natural</p>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- Tone & Persona Settings -->
+    <section class="settings-section">
+      <h2>🎭 Tone & Persona Adaptation</h2>
+      <div class="tone-settings">
+        <div class="setting-row">
+          <label for="default-tone">Default Tone</label>
+          <select id="default-tone">
+            <option value="professional">💼 Professional</option>
+            <option value="casual">😊 Casual</option>
+            <option value="formal">🎩 Formal</option>
+            <option value="creative">🎨 Creative</option>
+            <option value="persuasive">💪 Persuasive</option>
+            <option value="technical">🔧 Technical</option>
+            <option value="empathetic">💖 Empathetic</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label for="auto-tone-detection">Auto Tone Detection</label>
+          <input type="checkbox" id="auto-tone-detection" checked>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personalization -->
+    <section class="settings-section">
+      <h2>🎯 Personalization Features</h2>
+      <div class="personalization-grid">
+        <div class="personal-dictionary">
+          <h3>Personal Dictionary</h3>
+          <textarea id="personal-dictionary" placeholder="Add custom words, technical terms, brand names (one per line)"></textarea>
+        </div>
+        <div class="learning-settings">
+          <h3>Learning & Adaptation</h3>
+          <label class="checkbox-item">
+            <input type="checkbox" id="learn-from-corrections" checked>
+            Learn from my corrections
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="adaptive-suggestions" checked>
+            Adaptive suggestions based on writing style
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Site-Specific Settings -->
+    <section class="settings-section">
+      <h2>🌐 Site-Specific Configuration</h2>
+      <div class="site-config">
+        <div class="site-lists">
+          <div class="allowed-sites">
+            <h3>Allowed Sites (leave empty for all sites)</h3>
+            <textarea id="allowed-sites" placeholder="*.google.com&#10;mail.yahoo.com&#10;docs.microsoft.com"></textarea>
+          </div>
+          <div class="blocked-sites">
+            <h3>Blocked Sites</h3>
+            <textarea id="blocked-sites" placeholder="example.com&#10;*.social-media.com"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy & Data -->
+    <section class="settings-section">
+      <h2>🔒 Privacy & Data Management</h2>
+      <div class="privacy-settings">
+        <label class="checkbox-item">
+          <input type="checkbox" id="local-processing" checked>
+          Prefer local processing when possible
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="anonymous-analytics">
+          Allow anonymous usage analytics
+        </label>
+        <div class="data-actions">
+          <button class="btn btn-secondary" id="export-settings">Export Settings</button>
+          <button class="btn btn-secondary" id="import-settings">Import Settings</button>
+          <button class="btn btn-danger" id="clear-all-data">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Save/Reset Actions -->
+    <footer class="options-footer">
+      <div class="footer-actions">
+        <button class="btn btn-primary" id="save-settings">Save All Settings</button>
+        <button class="btn btn-secondary" id="reset-defaults">Reset to Defaults</button>
+      </div>
+      <div class="footer-info">
+        <p>AI Writing Assistant Pro v3.0.0 • All settings are synced across devices</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Writing Assistant - Settings</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="options-container">
+        <!-- Header -->
+        <header class="options-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">✨</span>
+                    <h1>AI Writing Assistant</h1>
+                    <span class="version">v1.0.0</span>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="exportBtn">Export Settings</button>
+                    <button class="btn btn-secondary" id="importBtn">Import Settings</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                </div>
+            </div>
+            <nav class="settings-nav">
+                <button class="nav-item active" data-section="general">General</button>
+                <button class="nav-item" data-section="features">Features</button>
+                <button class="nav-item" data-section="ai">AI Settings</button>
+                <button class="nav-item" data-section="interface">Interface</button>
+                <button class="nav-item" data-section="advanced">Advanced</button>
+                <button class="nav-item" data-section="about">About</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="options-main">
+            <!-- General Settings -->
+            <section id="general" class="settings-section active">
+                <h2>General Settings</h2>
+                
+                <div class="setting-group">
+                    <h3>Extension Status</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="masterEnable">
+                            <span class="setting-title">Enable AI Writing Assistant</span>
+                        </label>
+                        <p class="setting-description">Turn on/off all writing assistance features across all websites.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Default Mode</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Default Processing Mode</span>
+                        </label>
+                        <select id="defaultMode" class="setting-select">
+                            <option value="auto">Auto (All features)</option>
+                            <option value="grammar">Grammar Only</option>
+                            <option value="humanize">Humanization Only</option>
+                            <option value="enhance">Style Enhancement Only</option>
+                        </select>
+                        <p class="setting-description">Choose the default mode when the extension starts.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Language & Region</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Primary Language</span>
+                        </label>
+                        <select id="primaryLanguage" class="setting-select">
+                            <option value="en-US">English (US)</option>
+                            <option value="en-GB">English (UK)</option>
+                            <option value="en-CA">English (Canada)</option>
+                            <option value="en-AU">English (Australia)</option>
+                        </select>
+                        <p class="setting-description">Primary language for grammar checking and suggestions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Settings -->
+            <section id="features" class="settings-section">
+                <h2>Feature Configuration</h2>
+                
+                <div class="setting-group">
+                    <h3>Core Features</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="grammarCheckFeature">
+                            <span class="setting-title">Grammar & Spelling Check</span>
+                        </label>
+                        <p class="setting-description">Real-time grammar, spelling, and punctuation corrections.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="humanizationFeature">
+                            <span class="setting-title">Text Humanization</span>
+                        </label>
+                        <p class="setting-description">Transform AI-generated text to sound more natural and human-like.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="styleEnhancementFeature">
+                            <span class="setting-title">Style Enhancement</span>
+                        </label>
+                        <p class="setting-description">Improve writing clarity, conciseness, and engagement.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="toneAdjustment">
+                            <span class="setting-title">Tone Adjustment</span>
+                        </label>
+                        <p class="setting-description">Automatically adjust text tone based on context and audience.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Advanced Features</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="contextualSuggestions">
+                            <span class="setting-title">Contextual Suggestions</span>
+                        </label>
+                        <p class="setting-description">Provide suggestions based on the type of content being written.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="readabilityAnalysis">
+                            <span class="setting-title">Readability Analysis</span>
+                        </label>
+                        <p class="setting-description">Analyze and score text readability with improvement suggestions.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="plagiarismDetection">
+                            <span class="setting-title">Plagiarism Detection</span>
+                        </label>
+                        <p class="setting-description">Basic plagiarism detection and originality checking.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Settings -->
+            <section id="ai" class="settings-section">
+                <h2>AI Configuration</h2>
+                
+                <div class="setting-group">
+                    <h3>Processing Intensity</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Suggestion Aggressiveness</span>
+                        </label>
+                        <div class="slider-container">
+                            <input type="range" id="suggestionIntensity" min="0.1" max="1.0" step="0.1" value="0.7" class="setting-slider">
+                            <div class="slider-labels">
+                                <span>Conservative</span>
+                                <span>Balanced</span>
+                                <span>Aggressive</span>
+                            </div>
+                            <div class="slider-value">
+                                <span id="intensityDisplay">70%</span>
+                            </div>
+                        </div>
+                        <p class="setting-description">How frequently and aggressively the AI suggests changes.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Tone Preferences</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Default Tone</span>
+                        </label>
+                        <select id="defaultTone" class="setting-select">
+                            <option value="professional">Professional</option>
+                            <option value="casual">Casual</option>
+                            <option value="formal">Formal</option>
+                            <option value="creative">Creative</option>
+                            <option value="friendly">Friendly</option>
+                            <option value="academic">Academic</option>
+                            <option value="business">Business</option>
+                            <option value="conversational">Conversational</option>
+                        </select>
+                        <p class="setting-description">Default tone for text adjustments and suggestions.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="autoToneDetection">
+                            <span class="setting-title">Automatic Tone Detection</span>
+                        </label>
+                        <p class="setting-description">Automatically detect and maintain the existing tone of text.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Performance</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Analysis Delay</span>
+                        </label>
+                        <select id="analysisDelay" class="setting-select">
+                            <option value="100">Instant (100ms)</option>
+                            <option value="300" selected>Fast (300ms)</option>
+                            <option value="500">Balanced (500ms)</option>
+                            <option value="1000">Slow (1s)</option>
+                            <option value="2000">Very Slow (2s)</option>
+                        </select>
+                        <p class="setting-description">Delay before analyzing text changes to reduce API calls.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interface Settings -->
+            <section id="interface" class="settings-section">
+                <h2>Interface & Display</h2>
+                
+                <div class="setting-group">
+                    <h3>Toolbar Settings</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="showFloatingToolbar">
+                            <span class="setting-title">Show Floating Toolbar</span>
+                        </label>
+                        <p class="setting-description">Display the floating toolbar when focusing on text fields.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="showWordCount">
+                            <span class="setting-title">Show Word Count</span>
+                        </label>
+                        <p class="setting-description">Display word count in the floating toolbar.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="showReadabilityScore">
+                            <span class="setting-title">Show Readability Score</span>
+                        </label>
+                        <p class="setting-description">Display readability score in the toolbar.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Highlighting</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Grammar Highlight Color</span>
+                        </label>
+                        <input type="color" id="grammarColor" value="#ef4444" class="color-picker">
+                        <p class="setting-description">Color for grammar and spelling error highlights.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Style Highlight Color</span>
+                        </label>
+                        <input type="color" id="styleColor" value="#2563eb" class="color-picker">
+                        <p class="setting-description">Color for style improvement suggestions.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Tone Highlight Color</span>
+                        </label>
+                        <input type="color" id="toneColor" value="#16a34a" class="color-picker">
+                        <p class="setting-description">Color for tone adjustment suggestions.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Notifications</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="showNotifications">
+                            <span class="setting-title">Show Success Notifications</span>
+                        </label>
+                        <p class="setting-description">Show notifications when text processing is completed.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="soundEffects">
+                            <span class="setting-title">Sound Effects</span>
+                        </label>
+                        <p class="setting-description">Play sound effects for notifications and actions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Advanced Settings -->
+            <section id="advanced" class="settings-section">
+                <h2>Advanced Configuration</h2>
+                
+                <div class="setting-group">
+                    <h3>Site-Specific Settings</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Allowed Sites</span>
+                        </label>
+                        <textarea id="allowedSites" class="setting-textarea" rows="4" 
+                                  placeholder="Enter domain patterns, one per line (e.g., *.google.com, mail.yahoo.com)"></textarea>
+                        <p class="setting-description">Specific sites where the extension should be active. Leave empty for all sites.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Blocked Sites</span>
+                        </label>
+                        <textarea id="blockedSites" class="setting-textarea" rows="4" 
+                                  placeholder="Enter domain patterns, one per line"></textarea>
+                        <p class="setting-description">Sites where the extension should be disabled.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Custom Dictionary</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-title">Personal Dictionary</span>
+                        </label>
+                        <textarea id="personalDictionary" class="setting-textarea" rows="4" 
+                                  placeholder="Add custom words, one per line"></textarea>
+                        <p class="setting-description">Words that should not be flagged as spelling errors.</p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Data & Privacy</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="localProcessingOnly">
+                            <span class="setting-title">Local Processing Only</span>
+                        </label>
+                        <p class="setting-description">Process text locally without sending data to external servers.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="collectUsageStats">
+                            <span class="setting-title">Collect Usage Statistics</span>
+                        </label>
+                        <p class="setting-description">Help improve the extension by sharing anonymous usage data.</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <button class="btn btn-danger" id="clearDataBtn">Clear All Data</button>
+                        <p class="setting-description">Remove all stored settings, statistics, and cached data.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="settings-section">
+                <h2>About</h2>
+                
+                <div class="about-content">
+                    <div class="about-header">
+                        <div class="about-icon">✨</div>
+                        <div class="about-info">
+                            <h3>AI Writing Assistant</h3>
+                            <p class="version-info">Version 1.0.0</p>
+                            <p class="build-info">Built with Chrome's AI API</p>
+                        </div>
+                    </div>
+
+                    <div class="about-description">
+                        <p>A comprehensive writing assistance tool that provides real-time grammar checking, text humanization, and style enhancements using Chrome's built-in AI capabilities.</p>
+                    </div>
+
+                    <div class="about-features">
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li>Real-time grammar and spelling correction</li>
+                            <li>AI text humanization for natural-sounding content</li>
+                            <li>Style enhancement and tone adjustment</li>
+                            <li>Contextual writing suggestions</li>
+                            <li>Privacy-focused local processing</li>
+                            <li>Customizable interface and behavior</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-system">
+                        <h4>System Requirements</h4>
+                        <ul>
+                            <li>Google Chrome 120 or later</li>
+                            <li>Chrome AI features enabled</li>
+                            <li>Minimum 4GB RAM recommended</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-links">
+                        <button class="btn btn-secondary" id="helpBtn">Help & Support</button>
+                        <button class="btn btn-secondary" id="feedbackBtn">Send Feedback</button>
+                        <button class="btn btn-secondary" id="licenseBtn">View License</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="options-footer">
+            <div class="footer-content">
+                <div class="save-status">
+                    <span id="saveStatus">All changes saved</span>
+                </div>
+                <div class="footer-actions">
+                    <button class="btn btn-secondary" id="resetBtn">Reset to Defaults</button>
+                    <button class="btn btn-primary" id="saveBtn">Save Changes</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="confirmModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirm Action</h3>
+            <p id="confirmMessage">Are you sure you want to proceed?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn btn-primary" id="confirmOk">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>

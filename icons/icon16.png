@@ -1,0 +1,7 @@
+# This is a placeholder for the 16x16 icon
+# In a real extension, you would include actual PNG icon files
+# For now, this serves as a placeholder to prevent manifest errors
+
+# Icon should be 16x16 pixels
+# Recommended: Create icons using SVG -> PNG conversion
+# Consider using a simple pen/writing tool icon with AI elements

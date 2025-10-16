@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Writing Assistant Pro - Control Center</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Main Control Center -->
+  <div class="popup-container">
+    <!-- Header with Status -->
+    <header class="popup-header">
+      <div class="header-left">
+        <div class="logo">
+          <span class="logo-icon">✨</span>
+          <span class="logo-text">AI Writing Assistant Pro</span>
+        </div>
+        <div class="status-indicator">
+          <span class="status-dot" id="status-dot"></span>
+          <span class="status-text" id="status-text">Checking...</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="settings-btn" title="Advanced Settings">
+          ⚙️
+        </button>
+      </div>
+    </header>
+
+    <!-- Master Toggle -->
+    <section class="toggle-section">
+      <div class="master-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" id="master-toggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="toggle-info">
+          <h3>Writing Assistant</h3>
+          <p>Enable AI-powered writing assistance across all websites</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Mode Selection -->
+    <section class="mode-section">
+      <h4 class="section-title">Quick Mode Selection</h4>
+      <div class="mode-grid">
+        <button class="mode-btn active" data-mode="auto">
+          <span class="mode-icon">🔄</span>
+          <span class="mode-label">Auto</span>
+          <span class="mode-desc">All features enabled</span>
+        </button>
+        <button class="mode-btn" data-mode="grammar">
+          <span class="mode-icon">📝</span>
+          <span class="mode-label">Grammar Check</span>
+          <span class="mode-desc">Focus on grammar</span>
+        </button>
+        <button class="mode-btn" data-mode="humanize">
+          <span class="mode-icon">🤖➡️👤</span>
+          <span class="mode-label">Humanize AI Text</span>
+          <span class="mode-desc">Make AI text natural</span>
+        </button>
+        <button class="mode-btn" data-mode="enhance">
+          <span class="mode-icon">✨</span>
+          <span class="mode-label">Enhance Style</span>
+          <span class="mode-desc">Improve clarity</span>
+        </button>
+        <button class="mode-btn" data-mode="quickfix">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-label">Quick Fix</span>
+          <span class="mode-desc">Fast corrections</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Tone Selector -->
+    <section class="tone-section">
+      <h4 class="section-title">Default Tone</h4>
+      <select class="tone-select" id="tone-select">
+        <option value="professional">💼 Professional</option>
+        <option value="casual">😊 Casual</option>
+        <option value="formal">🎩 Formal</option>
+        <option value="creative">🎨 Creative</option>
+        <option value="persuasive">💪 Persuasive</option>
+        <option value="technical">🔧 Technical</option>
+        <option value="empathetic">💖 Empathetic</option>
+      </select>
+    </section>
+
+    <!-- Intensity Slider -->
+    <section class="intensity-section">
+      <h4 class="section-title">Suggestion Intensity</h4>
+      <div class="intensity-container">
+        <input type="range" class="intensity-slider" id="intensity-slider" min="1" max="5" value="3">
+        <div class="intensity-labels">
+          <span class="intensity-label">Conservative</span>
+          <span class="intensity-label">Moderate</span>
+          <span class="intensity-label">Aggressive</span>
+        </div>
+        <div class="intensity-value" id="intensity-value">Moderate</div>
+      </div>
+    </section>
+
+    <!-- Feature Toggles -->
+    <section class="features-section">
+      <h4 class="section-title">Core Features</h4>
+      <div class="feature-grid">
+        <label class="feature-toggle">
+          <input type="checkbox" class="feature-checkbox" data-feature="realTimeAnalysis" checked>
+          <span class="feature-slider"></span>
+          <div class="feature-info">
+            <span class="feature-name">Real-time Analysis</span>
+            <span class="feature-desc">Live text checking</span>
+          </div>
+        </label>
+        
+        <label class="feature-toggle">
+          <input type="checkbox" class="feature-checkbox" data-feature="visualFeedback" checked>
+          <span class="feature-slider"></span>
+          <div class="feature-info">
+            <span class="feature-name">Visual Highlights</span>
+            <span class="feature-desc">Color-coded suggestions</span>
+          </div>
+        </label>
+        
+        <label class="feature-toggle">
+          <input type="checkbox" class="feature-checkbox" data-feature="floatingToolbar" checked>
+          <span class="feature-slider"></span>
+          <div class="feature-info">
+            <span class="feature-name">Floating Toolbar</span>
+            <span class="feature-desc">Quick action buttons</span>
+          </div>
+        </label>
+        
+        <label class="feature-toggle">
+          <input type="checkbox" class="feature-checkbox" data-feature="smartSuggestions" checked>
+          <span class="feature-slider"></span>
+          <div class="feature-info">
+            <span class="feature-name">Smart Suggestions</span>
+            <span class="feature-desc">Context-aware tips</span>
+          </div>
+        </label>
+        
+        <label class="feature-toggle">
+          <input type="checkbox" class="feature-checkbox" data-feature="contentOptimization" checked>
+          <span class="feature-slider"></span>
+          <div class="feature-info">
+            <span class="feature-name">Content Optimization</span>
+            <span class="feature-desc">SEO & readability</span>
+          </div>
+        </label>
+        
+        <label class="feature-toggle">
+          <input type="checkbox" class="feature-checkbox" data-feature="personalization" checked>
+          <span class="feature-slider"></span>
+          <div class="feature-info">
+            <span class="feature-name">Learning & Personalization</span>
+            <span class="feature-desc">Adaptive suggestions</span>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- Real-time Stats -->
+    <section class="stats-section">
+      <h4 class="section-title">Session Statistics</h4>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <div class="stat-value" id="corrections-count">0</div>
+            <div class="stat-label">Corrections</div>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">💡</div>
+          <div class="stat-info">
+            <div class="stat-value" id="suggestions-count">0</div>
+            <div class="stat-label">Suggestions</div>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">📝</div>
+          <div class="stat-info">
+            <div class="stat-value" id="words-analyzed">0</div>
+            <div class="stat-label">Words Analyzed</div>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-info">
+            <div class="stat-value" id="time-saved">0s</div>
+            <div class="stat-label">Time Saved</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="actions-section">
+      <h4 class="section-title">Quick Actions</h4>
+      <div class="action-buttons">
+        <button class="action-btn primary" id="analyze-page">
+          <span class="btn-icon">🔍</span>
+          <span class="btn-text">Analyze Current Page</span>
+        </button>
+        <button class="action-btn secondary" id="clear-data">
+          <span class="btn-icon">🗑️</span>
+          <span class="btn-text">Clear Session Data</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Keyboard Shortcuts Reference -->
+    <section class="shortcuts-section">
+      <h4 class="section-title">Keyboard Shortcuts</h4>
+      <div class="shortcuts-list">
+        <div class="shortcut-item">
+          <span class="shortcut-keys">Ctrl+Shift+A</span>
+          <span class="shortcut-desc">Toggle Assistant</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys">Ctrl+Shift+G</span>
+          <span class="shortcut-desc">Grammar Check</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys">Ctrl+Shift+H</span>
+          <span class="shortcut-desc">Humanize Text</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys">Ctrl+Shift+S</span>
+          <span class="shortcut-desc">Enhance Style</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys">Ctrl+Shift+T</span>
+          <span class="shortcut-desc">Adjust Tone</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <div class="footer-links">
+        <button class="footer-link" id="advanced-settings">Advanced Settings</button>
+        <button class="footer-link" id="help-support">Help & Support</button>
+        <button class="footer-link" id="feedback">Send Feedback</button>
+      </div>
+      <div class="footer-version">
+        <span>Version 3.0.0</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Initializing AI Writing Assistant...</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Writing Assistant</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <h1>AI Writing Assistant</h1>
+            </div>
+            <div class="toggle-section">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="masterToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-icon" id="statusIcon">🔴</span>
+                <span class="status-text" id="statusText">Disabled</span>
+            </div>
+            <div class="api-status">
+                <span class="api-indicator" id="apiIndicator">⚠️</span>
+                <span class="api-text" id="apiText">Checking AI...</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="popup-content" id="popupContent">
+            <!-- Mode Selection -->
+            <div class="section">
+                <h3>Mode</h3>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="auto" id="autoMode">
+                        <span class="mode-icon">🤖</span>
+                        <span>Auto</span>
+                    </button>
+                    <button class="mode-btn" data-mode="grammar" id="grammarMode">
+                        <span class="mode-icon">📝</span>
+                        <span>Grammar</span>
+                    </button>
+                    <button class="mode-btn" data-mode="humanize" id="humanizeMode">
+                        <span class="mode-icon">👤</span>
+                        <span>Humanize</span>
+                    </button>
+                    <button class="mode-btn" data-mode="enhance" id="enhanceMode">
+                        <span class="mode-icon">✨</span>
+                        <span>Enhance</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feature Toggles -->
+            <div class="section">
+                <h3>Features</h3>
+                <div class="feature-toggles">
+                    <div class="feature-item">
+                        <label class="feature-label">
+                            <input type="checkbox" id="grammarCheck" checked>
+                            <span class="feature-name">Grammar Check</span>
+                        </label>
+                        <span class="feature-description">Real-time grammar and spelling</span>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <label class="feature-label">
+                            <input type="checkbox" id="humanization" checked>
+                            <span class="feature-name">Text Humanization</span>
+                        </label>
+                        <span class="feature-description">Make AI text sound natural</span>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <label class="feature-label">
+                            <input type="checkbox" id="styleEnhancement" checked>
+                            <span class="feature-name">Style Enhancement</span>
+                        </label>
+                        <span class="feature-description">Improve clarity and engagement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tone Selection -->
+            <div class="section">
+                <h3>Default Tone</h3>
+                <div class="tone-selector">
+                    <select id="toneSelect">
+                        <option value="professional">Professional</option>
+                        <option value="casual">Casual</option>
+                        <option value="formal">Formal</option>
+                        <option value="creative">Creative</option>
+                        <option value="friendly">Friendly</option>
+                        <option value="academic">Academic</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Intensity Control -->
+            <div class="section">
+                <h3>Suggestion Intensity</h3>
+                <div class="intensity-control">
+                    <input type="range" id="intensitySlider" min="0.1" max="1.0" step="0.1" value="0.7">
+                    <div class="intensity-labels">
+                        <span>Conservative</span>
+                        <span>Balanced</span>
+                        <span>Aggressive</span>
+                    </div>
+                    <div class="intensity-value">
+                        <span id="intensityValue">70%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="section">
+                <h3>Session Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="textsProcessed">0</span>
+                        <span class="stat-label">Texts Processed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="suggestionsMade">0</span>
+                        <span class="stat-label">Suggestions Made</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="improvementScore">0%</span>
+                        <span class="stat-label">Avg. Improvement</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="timesSaved">0s</span>
+                        <span class="stat-label">Time Saved</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keyboard Shortcuts -->
+            <div class="section">
+                <h3>Keyboard Shortcuts</h3>
+                <div class="shortcuts-list">
+                    <div class="shortcut-item">
+                        <span class="shortcut-keys">Ctrl+Shift+A</span>
+                        <span class="shortcut-action">Toggle Assistant</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-keys">Ctrl+Shift+G</span>
+                        <span class="shortcut-action">Grammar Check</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-keys">Ctrl+Shift+H</span>
+                        <span class="shortcut-action">Humanize Text</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disabled State -->
+        <div class="disabled-content" id="disabledContent" style="display: none;">
+            <div class="disabled-message">
+                <div class="disabled-icon">😴</div>
+                <h3>AI Writing Assistant is Disabled</h3>
+                <p>Toggle the switch above to enable writing assistance features.</p>
+                <ul class="disabled-features">
+                    <li>Real-time grammar checking</li>
+                    <li>Text humanization</li>
+                    <li>Style enhancements</li>
+                    <li>Context menu options</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="popup-footer">
+            <div class="footer-actions">
+                <button class="action-button secondary" id="optionsBtn">
+                    <span>⚙️</span>
+                    Advanced Settings
+                </button>
+                <button class="action-button secondary" id="helpBtn">
+                    <span>❓</span>
+                    Help
+                </button>
+            </div>
+            <div class="version-info">
+                <span>v1.0.0</span>
+                <span class="divider">•</span>
+                <span id="aiStatus">AI Ready</span>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-spinner"></div>
+            <span class="loading-text">Initializing AI...</span>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

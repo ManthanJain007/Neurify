@@ -1,0 +1,107 @@
+{
+  "name": "ai-writing-assistant-pro",
+  "version": "3.0.0",
+  "description": "Professional-grade AI Writing Assistant with 50+ features powered by Google Gemini AI",
+  "main": "background.js",
+  "scripts": {
+    "build": "node build.js",
+    "validate": "node -e \"console.log('Manifest valid:', JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')))\"",
+    "test": "node test-extension.js",
+    "pack": "npm run build",
+    "dev": "echo 'Load as unpacked extension in Chrome at chrome://extensions/'",
+    "clean": "rm -rf build dist",
+    "prebuild": "npm run clean"
+  },
+  "keywords": [
+    "chrome-extension",
+    "writing-assistant",
+    "grammar-checker",
+    "ai-writing",
+    "gemini-ai",
+    "text-enhancement",
+    "writing-tools",
+    "productivity"
+  ],
+  "author": "AI Writing Assistant Pro",
+  "license": "MIT",
+  "homepage": "https://github.com/your-username/ai-writing-assistant-pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/ai-writing-assistant-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/ai-writing-assistant-pro/issues"
+  },
+  "chrome": {
+    "minimum_version": "100",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting", 
+      "contextMenus",
+      "background",
+      "identity",
+      "notifications",
+      "tabs",
+      "declarativeNetRequest"
+    ],
+    "host_permissions": [
+      "http://*/*",
+      "https://*/*",
+      "https://generativelanguage.googleapis.com/*"
+    ]
+  },
+  "features": {
+    "core_writing": [
+      "Advanced Grammar Checking",
+      "Spelling & Mechanics", 
+      "Style Enhancement",
+      "AI Text Humanization"
+    ],
+    "tone_persona": [
+      "Tone Detection & Adjustment",
+      "Persona-Based Writing"
+    ],
+    "advanced": [
+      "Real-Time Analysis",
+      "Smart Suggestions",
+      "Content Optimization"
+    ],
+    "ui": [
+      "Floating Toolbar",
+      "Visual Feedback System",
+      "In-Editor Experience"
+    ],
+    "customization": [
+      "Personalization Features",
+      "Site-Specific Rules",
+      "Cross-Platform Sync"
+    ],
+    "technical": [
+      "Performance Optimization", 
+      "Accessibility Features",
+      "Privacy & Security"
+    ],
+    "productivity": [
+      "Quick Actions",
+      "Analytics & Reporting"
+    ],
+    "platform": [
+      "Website Compatibility",
+      "Browser Integration",
+      "Professional Contexts",
+      "Personal Contexts"
+    ],
+    "workflow": [
+      "Seamless Experience",
+      "Learning & Improvement"
+    ]
+  },
+  "api": {
+    "provider": "Google Gemini AI",
+    "model": "gemini-1.5-flash-latest",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta",
+    "features": "50+ writing enhancement features",
+    "pricing": "Free tier available"
+  }
+}
