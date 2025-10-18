@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Writing Assistant Pro - Advanced Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <!-- Header -->
+    <header class="options-header">
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-icon">✨</span>
+          <h1>AI Writing Assistant Pro</h1>
+          <span class="version">v3.0.0</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary" id="export-settings">Export Settings</button>
+          <button class="btn btn-secondary" id="import-settings">Import Settings</button>
+          <input type="file" id="import-file" accept=".json" style="display: none;">
+        </div>
+      </div>
+      <nav class="settings-nav">
+        <button class="nav-item active" data-section="core">Core Features</button>
+        <button class="nav-item" data-section="tone">Tone & Persona</button>
+        <button class="nav-item" data-section="personalization">Personalization</button>
+        <button class="nav-item" data-section="interface">Interface</button>
+        <button class="nav-item" data-section="sites">Site Settings</button>
+        <button class="nav-item" data-section="privacy">Privacy & Data</button>
+        <button class="nav-item" data-section="advanced">Advanced</button>
+        <button class="nav-item" data-section="about">About</button>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="options-main">
+      <!-- Core Features Section -->
+      <section id="core" class="settings-section active">
+        <h2>🎯 Core Writing Features</h2>
+        
+        <div class="setting-group">
+          <h3>Extension Status</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="master-enable" checked>
+              <span class="setting-title">Enable AI Writing Assistant Pro</span>
+            </label>
+            <p class="setting-description">Turn on/off all writing assistance features across all websites.</p>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="setting-group">
+            <h3>Writing Enhancement Features</h3>
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="grammar-check" checked>
+                <span class="setting-title">Advanced Grammar Checking</span>
+              </label>
+              <p class="setting-description">Real-time grammar error detection and correction with context-aware suggestions</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="spelling-mechanics" checked>
+                <span class="setting-title">Spelling & Mechanics</span>
+              </label>
+              <p class="setting-description">Multi-dialect spelling, punctuation, and mechanical error correction</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="style-enhancement" checked>
+                <span class="setting-title">Style Enhancement</span>
+              </label>
+              <p class="setting-description">Improve clarity, conciseness, readability, and overall writing quality</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="text-humanization" checked>
+                <span class="setting-title">AI Text Humanization</span>
+              </label>
+              <p class="setting-description">Transform AI-generated text to sound natural and human-like</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="real-time-analysis" checked>
+                <span class="setting-title">Real-time Analysis</span>
+              </label>
+              <p class="setting-description">Continuous text analysis with color-coded suggestions and instant feedback</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="smart-suggestions" checked>
+                <span class="setting-title">Smart Suggestions</span>
+              </label>
+              <p class="setting-description">Multiple alternative suggestions with explanations and confidence scores</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Processing Mode</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Default Processing Mode</span>
+            </label>
+            <select id="default-mode" class="setting-select">
+              <option value="auto">Auto (All features)</option>
+              <option value="grammar">Grammar & Spelling Only</option>
+              <option value="humanize">Humanization Only</option>
+              <option value="enhance">Style Enhancement Only</option>
+              <option value="tone">Tone Adjustment Only</option>
+            </select>
+            <p class="setting-description">Choose the default mode when the extension starts.</p>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Language & Region</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Primary Language</span>
+            </label>
+            <select id="primary-language" class="setting-select">
+              <option value="en-US">English (US)</option>
+              <option value="en-GB">English (UK)</option>
+              <option value="en-CA">English (Canada)</option>
+              <option value="en-AU">English (Australia)</option>
+              <option value="en-IN">English (India)</option>
+            </select>
+            <p class="setting-description">Primary language for grammar checking and suggestions.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tone & Persona Section -->
+      <section id="tone" class="settings-section">
+        <h2>🎭 Tone & Persona Adaptation</h2>
+        
+        <div class="setting-group">
+          <h3>Tone Settings</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Default Tone</span>
+            </label>
+            <select id="default-tone" class="setting-select">
+              <option value="professional">💼 Professional</option>
+              <option value="casual">😊 Casual</option>
+              <option value="formal">🎩 Formal</option>
+              <option value="creative">🎨 Creative</option>
+              <option value="persuasive">💪 Persuasive</option>
+              <option value="technical">🔧 Technical</option>
+              <option value="empathetic">💖 Empathetic</option>
+              <option value="academic">📚 Academic</option>
+              <option value="business">💼 Business</option>
+              <option value="conversational">💬 Conversational</option>
+            </select>
+            <p class="setting-description">Default tone for text adjustments and suggestions.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="auto-tone-detection" checked>
+              <span class="setting-title">Automatic Tone Detection</span>
+            </label>
+            <p class="setting-description">Automatically detect and maintain the existing tone of text.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="tone-adjustment" checked>
+              <span class="setting-title">Tone Adjustment</span>
+            </label>
+            <p class="setting-description">Automatically adjust text tone based on context and audience.</p>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Persona-Based Writing</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="persona-writing" checked>
+              <span class="setting-title">Persona-Based Writing</span>
+            </label>
+            <p class="setting-description">Adapt writing style to specific professional personas and contexts.</p>
+          </div>
+
+          <div class="persona-grid">
+            <label class="persona-item">
+              <input type="checkbox" id="persona-academic" checked>
+              <span class="persona-title">🎓 Academic</span>
+            </label>
+            <label class="persona-item">
+              <input type="checkbox" id="persona-business" checked>
+              <span class="persona-title">💼 Business</span>
+            </label>
+            <label class="persona-item">
+              <input type="checkbox" id="persona-creative" checked>
+              <span class="persona-title">🎨 Creative</span>
+            </label>
+            <label class="persona-item">
+              <input type="checkbox" id="persona-technical" checked>
+              <span class="persona-title">🔧 Technical</span>
+            </label>
+            <label class="persona-item">
+              <input type="checkbox" id="persona-marketing" checked>
+              <span class="persona-title">📢 Marketing</span>
+            </label>
+            <label class="persona-item">
+              <input type="checkbox" id="persona-social" checked>
+              <span class="persona-title">🌐 Social Media</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Personalization Section -->
+      <section id="personalization" class="settings-section">
+        <h2>🎯 Personalization Features</h2>
+        
+        <div class="personalization-grid">
+          <div class="setting-group">
+            <h3>Learning & Adaptation</h3>
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="learn-from-corrections" checked>
+                <span class="setting-title">Learn from My Corrections</span>
+              </label>
+              <p class="setting-description">Adapt suggestions based on your previous corrections and preferences.</p>
+            </div>
+
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="adaptive-suggestions" checked>
+                <span class="setting-title">Adaptive Suggestions</span>
+              </label>
+              <p class="setting-description">Personalize suggestions based on your writing style and patterns.</p>
+            </div>
+
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="writing-profile" checked>
+                <span class="setting-title">Writing Profile</span>
+              </label>
+              <p class="setting-description">Build and use a personal writing profile for better suggestions.</p>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <h3>Personal Dictionary</h3>
+            <div class="setting-item">
+              <textarea id="personal-dictionary" class="setting-textarea" rows="6" 
+                        placeholder="Add custom words, technical terms, brand names (one per line)"></textarea>
+              <p class="setting-description">Words that should not be flagged as spelling errors.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Content Optimization</h3>
+          <div class="feature-grid">
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="content-optimization" checked>
+                <span class="setting-title">Content Optimization</span>
+              </label>
+              <p class="setting-description">Optimize content for specific purposes and platforms</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="seo-optimization">
+                <span class="setting-title">SEO Optimization</span>
+              </label>
+              <p class="setting-description">Suggest SEO improvements and keyword optimization</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="engagement-optimization" checked>
+                <span class="setting-title">Engagement Optimization</span>
+              </label>
+              <p class="setting-description">Improve reader engagement and content effectiveness</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="readability-analysis" checked>
+                <span class="setting-title">Readability Analysis</span>
+              </label>
+              <p class="setting-description">Analyze and score text readability with improvement suggestions</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interface Section -->
+      <section id="interface" class="settings-section">
+        <h2>🎨 Interface & Display</h2>
+        
+        <div class="setting-group">
+          <h3>Toolbar Settings</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="show-floating-toolbar" checked>
+              <span class="setting-title">Show Floating Toolbar</span>
+            </label>
+            <p class="setting-description">Display the floating toolbar when focusing on text fields.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="show-word-count" checked>
+              <span class="setting-title">Show Word Count</span>
+            </label>
+            <p class="setting-description">Display word count in the floating toolbar.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="show-readability-score" checked>
+              <span class="setting-title">Show Readability Score</span>
+            </label>
+            <p class="setting-description">Display readability score in the toolbar.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="contextual-suggestions" checked>
+              <span class="setting-title">Contextual Suggestions</span>
+            </label>
+            <p class="setting-description">Provide suggestions based on the type of content being written.</p>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Highlighting Colors</h3>
+          <div class="color-settings">
+            <div class="color-item">
+              <label class="setting-label">
+                <span class="setting-title">Grammar Highlight</span>
+              </label>
+              <input type="color" id="grammar-color" value="#ef4444" class="color-picker">
+              <span class="color-description">Grammar and spelling errors</span>
+            </div>
+
+            <div class="color-item">
+              <label class="setting-label">
+                <span class="setting-title">Style Highlight</span>
+              </label>
+              <input type="color" id="style-color" value="#2563eb" class="color-picker">
+              <span class="color-description">Style improvement suggestions</span>
+            </div>
+
+            <div class="color-item">
+              <label class="setting-label">
+                <span class="setting-title">Tone Highlight</span>
+              </label>
+              <input type="color" id="tone-color" value="#16a34a" class="color-picker">
+              <span class="color-description">Tone adjustment suggestions</span>
+            </div>
+
+            <div class="color-item">
+              <label class="setting-label">
+                <span class="setting-title">Humanization Highlight</span>
+              </label>
+              <input type="color" id="humanization-color" value="#8b5cf6" class="color-picker">
+              <span class="color-description">Humanization suggestions</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Notifications & Sounds</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="show-notifications" checked>
+              <span class="setting-title">Show Success Notifications</span>
+            </label>
+            <p class="setting-description">Show notifications when text processing is completed.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="sound-effects">
+              <span class="setting-title">Sound Effects</span>
+            </label>
+            <p class="setting-description">Play sound effects for notifications and actions.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Site Settings Section -->
+      <section id="sites" class="settings-section">
+        <h2>🌐 Site-Specific Configuration</h2>
+        
+        <div class="setting-group">
+          <h3>Site Management</h3>
+          <div class="site-lists">
+            <div class="site-group">
+              <h4>Allowed Sites</h4>
+              <p class="setting-description">Specific sites where the extension should be active. Leave empty for all sites.</p>
+              <textarea id="allowed-sites" class="setting-textarea" rows="4" 
+                        placeholder="*.google.com&#10;mail.yahoo.com&#10;docs.microsoft.com&#10;*.notion.so"></textarea>
+            </div>
+
+            <div class="site-group">
+              <h4>Blocked Sites</h4>
+              <p class="setting-description">Sites where the extension should be completely disabled.</p>
+              <textarea id="blocked-sites" class="setting-textarea" rows="4" 
+                        placeholder="example.com&#10;*.social-media.com&#10;banking.example.com"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Domain-Specific Rules</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="site-specific-rules" checked>
+              <span class="setting-title">Enable Domain-Specific Rules</span>
+            </label>
+            <p class="setting-description">Automatically adapt writing assistance based on the website domain.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="auto-context-detection" checked>
+              <span class="setting-title">Auto Context Detection</span>
+            </label>
+            <p class="setting-description">Detect writing context (email, social media, docs) automatically.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy & Data Section -->
+      <section id="privacy" class="settings-section">
+        <h2>🔒 Privacy & Data Management</h2>
+        
+        <div class="setting-group">
+          <h3>Data Processing</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="local-processing" checked>
+              <span class="setting-title">Prefer Local Processing</span>
+            </label>
+            <p class="setting-description">Process text locally when possible without external API calls.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="anonymous-analytics">
+              <span class="setting-title">Allow Anonymous Analytics</span>
+            </label>
+            <p class="setting-description">Help improve the extension by sharing anonymous usage data.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <input type="checkbox" id="cross-platform-sync" checked>
+              <span class="setting-title">Cross-Platform Sync</span>
+            </label>
+            <p class="setting-description">Sync your settings and preferences across all devices.</p>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Data Management</h3>
+          <div class="data-actions">
+            <button class="btn btn-secondary" id="export-data">Export All Data</button>
+            <button class="btn btn-secondary" id="import-data">Import Data</button>
+            <button class="btn btn-danger" id="clear-all-data">Clear All Data</button>
+          </div>
+          <p class="setting-description">Export your settings, learning data, and analytics, or clear everything.</p>
+        </div>
+      </section>
+
+      <!-- Advanced Section -->
+      <section id="advanced" class="settings-section">
+        <h2>⚙️ Advanced Configuration</h2>
+        
+        <div class="setting-group">
+          <h3>Performance Settings</h3>
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Analysis Delay</span>
+            </label>
+            <select id="analysis-delay" class="setting-select">
+              <option value="100">Instant (100ms)</option>
+              <option value="300" selected>Fast (300ms)</option>
+              <option value="500">Balanced (500ms)</option>
+              <option value="1000">Slow (1s)</option>
+              <option value="2000">Very Slow (2s)</option>
+            </select>
+            <p class="setting-description">Delay before analyzing text changes to reduce processing load.</p>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Suggestion Intensity</span>
+            </label>
+            <div class="slider-container">
+              <input type="range" id="suggestion-intensity" min="0.1" max="1.0" step="0.1" value="0.7" class="setting-slider">
+              <div class="slider-labels">
+                <span>Conservative</span>
+                <span>Balanced</span>
+                <span>Aggressive</span>
+              </div>
+              <div class="slider-value">
+                <span id="intensity-display">70%</span>
+              </div>
+            </div>
+            <p class="setting-description">How frequently and aggressively the AI suggests changes.</p>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <h3>Quick Actions</h3>
+          <div class="feature-grid">
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="quick-fix" checked>
+                <span class="setting-title">Quick Fix All</span>
+              </label>
+              <p class="setting-description">Apply all grammar and spelling fixes with one click</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="bulk-processing" checked>
+                <span class="setting-title">Bulk Processing</span>
+              </label>
+              <p class="setting-description">Process multiple text segments with consistent improvements</p>
+            </div>
+
+            <div class="feature-item">
+              <label class="setting-label">
+                <input type="checkbox" id="auto-apply" checked>
+                <span class="setting-title">Auto-Apply Corrections</span>
+              </label>
+              <p class="setting-description">Automatically apply common corrections without confirmation</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="settings-section">
+        <h2>ℹ️ About AI Writing Assistant Pro</h2>
+        
+        <div class="about-content">
+          <div class="about-header">
+            <div class="about-icon">✨</div>
+            <div class="about-info">
+              <h3>AI Writing Assistant Pro</h3>
+              <p class="version-info">Version 3.0.0</p>
+              <p class="build-info">Powered by Gemini AI • 50+ Features</p>
+            </div>
+          </div>
+
+          <div class="about-description">
+            <p>A comprehensive writing assistance tool that provides real-time grammar checking, text humanization, style enhancements, and advanced writing optimization using Google's Gemini AI technology.</p>
+          </div>
+
+          <div class="about-features">
+            <h4>✨ Key Features</h4>
+            <div class="features-grid">
+              <div class="feature-category">
+                <h5>Core Writing</h5>
+                <ul>
+                  <li>Advanced Grammar & Spelling Check</li>
+                  <li>Style Enhancement & Optimization</li>
+                  <li>AI Text Humanization</li>
+                  <li>Real-time Analysis</li>
+                </ul>
+              </div>
+              <div class="feature-category">
+                <h5>Tone & Adaptation</h5>
+                <ul>
+                  <li>Tone Detection & Adjustment</li>
+                  <li>Persona-Based Writing</li>
+                  <li>Context-Aware Suggestions</li>
+                  <li>Multi-Dialect Support</li>
+                </ul>
+              </div>
+              <div class="feature-category">
+                <h5>Productivity</h5>
+                <ul>
+                  <li>Quick Actions & Bulk Processing</li>
+                  <li>Content Optimization</li>
+                  <li>Readability Analysis</li>
+                  <li>Cross-Platform Sync</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-system">
+            <h4>🖥️ System Requirements</h4>
+            <ul>
+              <li>Google Chrome 88 or later</li>
+              <li>Minimum 2GB RAM recommended</li>
+              <li>Internet connection for AI features</li>
+              <li>Gemini API key for full functionality</li>
+            </ul>
+          </div>
+
+          <div class="about-links">
+            <button class="btn btn-secondary" id="help-btn">Help & Documentation</button>
+            <button class="btn btn-secondary" id="feedback-btn">Send Feedback</button>
+            <button class="btn btn-secondary" id="privacy-btn">Privacy Policy</button>
+            <button class="btn btn-secondary" id="license-btn">View License</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="options-footer">
+      <div class="footer-content">
+        <div class="save-status">
+          <span id="save-status">All changes saved</span>
+        </div>
+        <div class="footer-actions">
+          <button class="btn btn-secondary" id="reset-defaults">Reset to Defaults</button>
+          <button class="btn btn-primary" id="save-settings">Save All Changes</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modals -->
+  <div id="confirm-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Confirm Action</h3>
+      <p id="confirm-message">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+        <button class="btn btn-primary" id="confirm-ok">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

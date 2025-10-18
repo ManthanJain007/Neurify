@@ -4,12 +4,13 @@
   "description": "Professional-grade AI Writing Assistant with 50+ features powered by Google Gemini AI",
   "main": "background.js",
   "scripts": {
+    "start": "node build.js",
     "build": "node build.js",
     "validate": "node -e \"console.log('Manifest valid:', JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')))\"",
     "test": "node test-extension.js",
     "pack": "npm run build",
     "dev": "echo 'Load as unpacked extension in Chrome at chrome://extensions/'",
-    "clean": "rm -rf build dist",
+    "clean": "node -e \"const fs=require('fs'); try{fs.rmSync('build',{recursive:true,force:true});}catch(e){} try{fs.rmSync('dist',{recursive:true,force:true});}catch(e){}\"",
     "prebuild": "npm run clean"
   },
   "keywords": [
