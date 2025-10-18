@@ -25,7 +25,7 @@ class ExtensionBuilder {
   async build() {
     console.log('🚀 Building AI Writing Assistant Pro Extension...');
     console.log(`Version: ${this.version}`);
-    console.log('=' * 50);
+    console.log('='.repeat(50));
 
     try {
       // Step 1: Validate files
@@ -36,6 +36,9 @@ class ExtensionBuilder {
 
       // Step 3: Copy and process files
       await this.copyFiles();
+
+  // Step 3.5: Generate build info
+  this.generateBuildInfo();
 
       // Step 4: Validate manifest
       await this.validateManifest();
@@ -61,6 +64,7 @@ class ExtensionBuilder {
     const requiredFiles = [
       'manifest.json',
       'background.js',
+      'config.js',
       'content.js',
       'popup.html',
       'popup.js',
@@ -101,6 +105,7 @@ class ExtensionBuilder {
     const filesToCopy = [
       'manifest.json',
       'background.js',
+      'config.js',
       'content.js',
       'popup.html',
       'popup.js',
@@ -121,10 +126,27 @@ class ExtensionBuilder {
       }
     }
 
-    // Create icons directory if it doesn't exist
-    const iconsDir = path.join(this.buildDir, 'icons');
-    if (!fs.existsSync(iconsDir)) {
-      fs.mkdirSync(iconsDir, { recursive: true });
+    // Copy icons directory (if present)
+    const srcIconsDir = path.join(this.projectRoot, 'icons');
+    const destIconsDir = path.join(this.buildDir, 'icons');
+    if (fs.existsSync(srcIconsDir)) {
+      if (!fs.existsSync(destIconsDir)) {
+        fs.mkdirSync(destIconsDir, { recursive: true });
+      }
+      const iconFiles = fs.readdirSync(srcIconsDir);
+      for (const icon of iconFiles) {
+        const src = path.join(srcIconsDir, icon);
+        const dest = path.join(destIconsDir, icon);
+        if (fs.statSync(src).isFile()) {
+          fs.copyFileSync(src, dest);
+          console.log(`  ✓ icons/${icon}`);
+        }
+      }
+    } else {
+      // Ensure icons dir exists even if empty to satisfy manifest paths
+      if (!fs.existsSync(destIconsDir)) {
+        fs.mkdirSync(destIconsDir, { recursive: true });
+      }
     }
 
     console.log('✅ Files copied successfully');
@@ -169,10 +191,16 @@ class ExtensionBuilder {
     const zipPath = path.join(this.distDir, zipName);
 
     try {
-      // Create zip file (requires zip command)
-      execSync(`cd ${this.buildDir} && zip -r "${zipPath}" . -x "*.DS_Store" "*.git*"`, {
-        stdio: 'inherit'
-      });
+      if (process.platform === 'win32') {
+        // Use PowerShell Compress-Archive on Windows
+        const psCommand = `powershell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Path '${this.buildDir}/*' -DestinationPath '${zipPath.replace(/\\/g, '/')}' -Force"`;
+        execSync(psCommand, { stdio: 'inherit' });
+      } else {
+        // Create zip file using zip command on Unix-like systems
+        execSync(`cd ${this.buildDir} && zip -r "${zipPath}" . -x "*.DS_Store" "*.git*"`, {
+          stdio: 'inherit'
+        });
+      }
 
       console.log(`✅ Distribution package created: ${zipName}`);
     } catch (error) {

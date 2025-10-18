@@ -3,7 +3,8 @@
 
 class GeminiAPIService {
   constructor() {
-    this.apiKey = window.PRODUCTION_CONFIG?.GEMINI_API_KEY || 'AIzaSyB6xR1anuTx-HTPv-EoFBjPPTyVdtf3sYQ';
+    const cfg = (typeof globalThis !== 'undefined' ? globalThis.PRODUCTION_CONFIG : undefined) || (typeof window !== 'undefined' ? window.PRODUCTION_CONFIG : undefined) || {};
+    this.apiKey = cfg.GEMINI_API_KEY || 'AIzaSyB6xR1anuTx-HTPv-EoFBjPPTyVdtf3sYQ';
     this.baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
     this.model = 'gemini-1.5-flash-latest';
     this.initialized = false;
@@ -1017,11 +1018,333 @@ Provide 3-5 personalized writing tips and suggestions.`;
       }
     };
   }
+
+  // AUTO-WRITE FEATURE
+  async autoWrite(prompt, options = {}) {
+    const autoWritePrompt = `You are an intelligent auto-writing assistant. Generate high-quality content based on the given prompt and context.
+
+Prompt: "${prompt}"
+
+Content specifications:
+- Type: ${options.contentType || 'general'}
+- Length: ${options.length || 'medium'} (short: ~100 words, medium: ~300 words, long: ~500+ words)
+- Tone: ${options.tone || 'professional'}
+- Audience: ${options.audience || 'general'}
+- Purpose: ${options.purpose || 'inform'}
+- Style: ${options.style || 'clear and engaging'}
+
+Additional context: ${options.context || 'None provided'}
+
+Generate well-structured, original content that:
+1. Directly addresses the prompt
+2. Is appropriate for the specified audience and purpose
+3. Maintains the requested tone throughout
+4. Includes relevant examples or details when helpful
+5. Has proper flow and transitions
+6. Is engaging and readable
+
+If the prompt is too vague, ask for clarification or make reasonable assumptions.`;
+
+    return await this.generateContent(autoWritePrompt, {
+      temperature: 0.7,
+      maxOutputTokens: options.length === 'long' ? 3000 : options.length === 'short' ? 500 : 1500,
+      featureType: 'autoWrite'
+    });
+  }
+
+  async autoComplete(partialText, options = {}) {
+    const prompt = `You are an intelligent text completion assistant. Continue the following text in a natural, coherent way:
+
+Partial text: "${partialText}"
+
+Continuation requirements:
+- Continue seamlessly from where the text left off
+- Maintain the same tone and style
+- Length: ${options.completionLength || 'natural'} continuation
+- Context: ${options.context || 'general writing'}
+- Purpose: ${options.purpose || 'complete the thought'}
+
+Provide a natural continuation that feels like the original author wrote it.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.6,
+      maxOutputTokens: 1000,
+      featureType: 'autoComplete'
+    });
+  }
+
+  async generateIdeas(topic, options = {}) {
+    const prompt = `You are a creative idea generation assistant. Generate ${options.count || 5} creative and useful ideas related to the given topic.
+
+Topic: "${topic}"
+
+Idea specifications:
+- Type: ${options.ideaType || 'general concepts'}
+- Creativity level: ${options.creativity || 'balanced'}
+- Practicality: ${options.practicality || 'practical'}
+- Target audience: ${options.audience || 'general'}
+
+Generate ideas that are:
+1. Relevant to the topic
+2. Creative and original
+3. Actionable (if applicable)
+4. Diverse in approach
+5. Well-explained with brief descriptions
+
+Format as a numbered list with explanations.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.8,
+      maxOutputTokens: 2000,
+      featureType: 'ideaGeneration'
+    });
+  }
+
+  // AI CHATBOT FEATURE
+  async chatResponse(userMessage, conversationHistory = [], options = {}) {
+    const context = conversationHistory.length > 0 ? 
+      conversationHistory.slice(-10).map(msg => `${msg.role}: ${msg.content}`).join('\n') : 
+      'No previous conversation.';
+
+    const chatPrompt = `You are an intelligent AI writing assistant chatbot. You help users with writing, grammar, style, and general communication needs. You are friendly, helpful, and knowledgeable.
+
+Conversation History:
+${context}
+
+User's current message: "${userMessage}"
+
+Personality traits:
+- Helpful and supportive
+- Expert in writing and language
+- Friendly but professional
+- Concise but thorough when needed
+- Ask clarifying questions when helpful
+- Provide actionable advice
+
+Respond naturally to the user's message. If they ask for writing help, provide specific, actionable advice. If they ask general questions, be helpful and informative. Keep responses conversational and engaging.
+
+Special capabilities to mention when relevant:
+- Grammar and spell checking
+- Text humanization
+- Tone adjustment
+- Style enhancement
+- Auto-writing assistance
+- Content optimization
+- Writing analytics`;
+
+    return await this.generateContent(chatPrompt, {
+      temperature: 0.7,
+      maxOutputTokens: 1500,
+      featureType: 'chatbot'
+    });
+  }
+
+  async provideFeedback(text, feedbackType = 'comprehensive') {
+    const feedbackPrompts = {
+      'quick': 'Provide 3 quick improvement suggestions',
+      'comprehensive': 'Provide detailed analysis with specific recommendations',
+      'positive': 'Focus on what works well and gentle suggestions for improvement',
+      'constructive': 'Provide balanced feedback with both strengths and areas for improvement'
+    };
+
+    const prompt = `You are a writing coach providing feedback on the following text:
+
+"${text}"
+
+Feedback type: ${feedbackType}
+Feedback approach: ${feedbackPrompts[feedbackType]}
+
+Provide feedback that is:
+1. Specific and actionable
+2. Encouraging and constructive
+3. Focused on the most important improvements
+4. Balanced between strengths and areas for growth
+5. Appropriate for the text's context and purpose
+
+Structure your feedback clearly with specific examples from the text.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.5,
+      maxOutputTokens: 2000,
+      featureType: 'feedback'
+    });
+  }
+
+  async explainWritingConcept(concept, level = 'intermediate') {
+    const prompt = `You are a writing instructor. Explain the following writing concept clearly and helpfully:
+
+Concept: "${concept}"
+Explanation level: ${level} (beginner/intermediate/advanced)
+
+Provide an explanation that includes:
+1. Clear definition of the concept
+2. Why it's important for good writing
+3. Practical examples
+4. Common mistakes to avoid
+5. Tips for improvement
+6. Practice suggestions (if applicable)
+
+Tailor the complexity and examples to the specified level.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.4,
+      maxOutputTokens: 1500,
+      featureType: 'conceptExplanation'
+    });
+  }
+
+  // WRITING TEMPLATES AND FRAMEWORKS
+  async generateTemplate(templateType, options = {}) {
+    const templates = {
+      'email': 'Professional email template with proper structure',
+      'essay': 'Academic essay template with introduction, body, and conclusion',
+      'report': 'Business report template with executive summary and sections',
+      'proposal': 'Project proposal template with problem, solution, and timeline',
+      'article': 'Article template with engaging headline and structured content',
+      'social-post': 'Social media post template optimized for engagement',
+      'cover-letter': 'Professional cover letter template',
+      'press-release': 'Press release template with proper formatting'
+    };
+
+    const prompt = `Generate a ${templateType} template with the following specifications:
+
+Template type: ${templateType}
+Description: ${templates[templateType] || 'Custom template'}
+Topic/Subject: ${options.topic || '[Your Topic Here]'}
+Audience: ${options.audience || 'general'}
+Tone: ${options.tone || 'professional'}
+
+Create a comprehensive template that includes:
+1. Proper structure and formatting
+2. Placeholder text with clear instructions
+3. Key elements specific to this template type
+4. Tips for customization
+5. Best practices notes
+
+Make it practical and immediately usable.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.3,
+      maxOutputTokens: 2000,
+      featureType: 'templateGeneration'
+    });
+  }
+
+  // PRODUCTIVITY ENHANCEMENTS
+  async summarizeText(text, summaryType = 'concise') {
+    const summaryPrompts = {
+      'bullet-points': 'Create a bullet-point summary with key highlights',
+      'concise': 'Create a brief, concise summary in paragraph form',
+      'detailed': 'Create a comprehensive summary maintaining important details',
+      'executive': 'Create an executive summary suitable for business contexts'
+    };
+
+    const prompt = `Summarize the following text using the ${summaryType} approach:
+
+"${text}"
+
+Summary requirements:
+- Type: ${summaryPrompts[summaryType]}
+- Capture main ideas and key points
+- Maintain logical flow
+- Be accurate to the original content
+- Appropriate length for summary type
+
+Provide a clear, well-organized summary.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.3,
+      maxOutputTokens: Math.min(1500, Math.floor(text.length * 0.3)),
+      featureType: 'summarization'
+    });
+  }
+
+  async expandText(text, expansionType = 'detailed') {
+    const prompt = `Expand the following text to make it more ${expansionType}:
+
+"${text}"
+
+Expansion requirements:
+- Expansion type: ${expansionType}
+- Add relevant details and examples
+- Maintain the original meaning and tone
+- Improve clarity and engagement
+- Keep the expansion natural and flowing
+
+Provide an expanded version that enhances the original without changing its core message.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.5,
+      maxOutputTokens: 2500,
+      featureType: 'textExpansion'
+    });
+  }
+
+  // ADVANCED ANALYSIS FEATURES
+  async analyzeReadability(text) {
+    const prompt = `Perform a comprehensive readability analysis of the following text:
+
+"${text}"
+
+Analyze and report on:
+1. Estimated Flesch-Kincaid reading level
+2. Average sentence length
+3. Average syllables per word
+4. Paragraph structure assessment
+5. Vocabulary complexity
+6. Transition usage
+7. Overall readability score (1-10)
+8. Specific recommendations for improvement
+9. Target audience assessment
+10. Suggestions for making it more accessible
+
+Provide specific, actionable recommendations.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.2,
+      maxOutputTokens: 1500,
+      featureType: 'readabilityAnalysis'
+    });
+  }
+
+  async detectPlagiarism(text) {
+    const prompt = `Analyze the following text for potential plagiarism indicators:
+
+"${text}"
+
+Look for:
+1. Unusual vocabulary shifts
+2. Inconsistent writing styles
+3. Overly formal language that doesn't match context
+4. Generic or template-like phrases
+5. Lack of personal voice or opinion
+6. Perfect grammar in otherwise imperfect writing
+7. Factual claims without personal insight
+
+Provide:
+- Risk assessment (Low/Medium/High)
+- Specific areas of concern
+- Suggestions for making content more original
+- Tips for proper attribution if sources are used
+
+Note: This is a preliminary analysis and not a substitute for professional plagiarism detection tools.`;
+
+    return await this.generateContent(prompt, {
+      temperature: 0.3,
+      maxOutputTokens: 1000,
+      featureType: 'plagiarismAnalysis'
+    });
+  }
 }
 
 // Export for use in other files
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = GeminiAPIService;
 } else if (typeof window !== 'undefined') {
-  window.GeminiAPIService = GeminiAPIService;
+  if (typeof globalThis !== 'undefined') {
+    globalThis.GeminiAPIService = GeminiAPIService;
+  }
+  if (typeof window !== 'undefined') {
+    window.GeminiAPIService = GeminiAPIService;
+  }
 }

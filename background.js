@@ -80,12 +80,21 @@ class AIWritingAssistantBackground {
 
   handleInitializationError(error) {
     // Send error notification to popup if it's open
-    chrome.runtime.sendMessage({
-      type: 'initialization_error',
-      error: error.message
-    }).catch(() => {
-      // Popup might not be open, ignore
-    });
+    try {
+      const msg = { type: 'initialization_error', error: error.message };
+      if (chrome?.runtime?.sendMessage) {
+        // Some environments use callback API only
+        let responded = false;
+        chrome.runtime.sendMessage(msg, () => { responded = true; });
+        setTimeout(() => {
+          if (!responded) {
+            // No-op; likely no listener
+          }
+        }, 0);
+      }
+    } catch (_) {
+      // Ignore if messaging not available yet
+    }
 
     // Set up basic functionality even if initialization fails
     this.setupMessageListeners();
@@ -314,9 +323,87 @@ class AIWritingAssistantBackground {
           const processResult = await this.processText(request.text, request.type, request.options);
           sendResponse({ success: true, result: processResult });
           break;
+
+        // Auto-Write Features
+        case 'autoWrite':
+          const autoWriteResult = await this.handleAutoWrite(request.prompt, request.options);
+          sendResponse(autoWriteResult);
+          break;
+
+        case 'generateIdeas':
+          const ideasResult = await this.handleGenerateIdeas(request.topic, request.options);
+          sendResponse(ideasResult);
+          break;
+
+        case 'autoComplete':
+          const completeResult = await this.handleAutoComplete(request.partialText, request.options);
+          sendResponse(completeResult);
+          break;
+
+        case 'generateTemplate':
+          const templateResult = await this.handleGenerateTemplate(request.templateType, request.options);
+          sendResponse(templateResult);
+          break;
+
+        case 'summarizeText':
+          const summaryResult = await this.handleSummarizeText(request.text, request.summaryType);
+          sendResponse(summaryResult);
+          break;
+
+        case 'expandText':
+          const expandResult = await this.handleExpandText(request.text, request.expansionType);
+          sendResponse(expandResult);
+          break;
+
+        // AI Chatbot Features
+        case 'chatResponse':
+          const chatResult = await this.handleChatResponse(request.message, request.conversationHistory, request.options);
+          sendResponse(chatResult);
+          break;
+
+        case 'provideFeedback':
+          const feedbackResult = await this.handleProvideFeedback(request.text, request.feedbackType);
+          sendResponse(feedbackResult);
+          break;
+
+        case 'explainConcept':
+          const explanationResult = await this.handleExplainConcept(request.concept, request.level);
+          sendResponse(explanationResult);
+          break;
+
+        // Enhanced Writing Features
+        case 'humanizeText':
+          const humanizeResult = await this.handleHumanizeText(request.text, request.options);
+          sendResponse(humanizeResult);
+          break;
+
+        case 'enhanceStyle':
+          const styleResult = await this.handleEnhanceStyle(request.text, request.options);
+          sendResponse(styleResult);
+          break;
+
+        case 'adjustTone':
+          const toneResult = await this.handleAdjustTone(request.text, request.targetTone, request.options);
+          sendResponse(toneResult);
+          break;
+
+        case 'analyzeReadability':
+          const readabilityResult = await this.handleAnalyzeReadability(request.text);
+          sendResponse(readabilityResult);
+          break;
+
+        case 'detectPlagiarism':
+          const plagiarismResult = await this.handleDetectPlagiarism(request.text);
+          sendResponse(plagiarismResult);
+          break;
           
         case 'getSessionStats':
           sendResponse({ success: true, stats: this.sessionData });
+          break;
+          
+        case 'clearSessionData':
+          await this.clearSessionData();
+          sendResponse({ success: true });
           break;
           
         case 'getAnalytics':
@@ -340,6 +427,273 @@ class AIWritingAssistantBackground {
     } catch (error) {
       console.error('Message handling error:', error);
       sendResponse({ success: false, error: error.message });
+    }
+  }
+
+  // Auto-Write Feature Handlers
+  async handleAutoWrite(prompt, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.autoWrite(prompt, options);
+      
+      // Update session stats
+      this.sessionData.autoWrites = (this.sessionData.autoWrites || 0) + 1;
+      await this.saveSessionData();
+      
+      return {
+        success: true,
+        content: result.text,
+        metadata: {
+          wordsGenerated: result.text.split(' ').length,
+          contentType: options.contentType || 'general',
+          tone: options.tone || 'professional'
+        }
+      };
+    } catch (error) {
+      console.error('Auto-write error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleGenerateIdeas(topic, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.generateIdeas(topic, options);
+      return {
+        success: true,
+        ideas: result.text
+      };
+    } catch (error) {
+      console.error('Idea generation error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleAutoComplete(partialText, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.autoComplete(partialText, options);
+      return {
+        success: true,
+        completion: result.text
+      };
+    } catch (error) {
+      console.error('Auto-complete error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleGenerateTemplate(templateType, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.generateTemplate(templateType, options);
+      return {
+        success: true,
+        template: result.text
+      };
+    } catch (error) {
+      console.error('Template generation error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleSummarizeText(text, summaryType = 'concise') {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.summarizeText(text, summaryType);
+      return {
+        success: true,
+        summary: result.text,
+        originalLength: text.length,
+        summaryLength: result.text.length
+      };
+    } catch (error) {
+      console.error('Summarization error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleExpandText(text, expansionType = 'detailed') {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.expandText(text, expansionType);
+      return {
+        success: true,
+        expandedText: result.text,
+        originalLength: text.length,
+        expandedLength: result.text.length
+      };
+    } catch (error) {
+      console.error('Text expansion error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // AI Chatbot Feature Handlers
+  async handleChatResponse(message, conversationHistory = [], options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.chatResponse(message, conversationHistory, options);
+      return {
+        success: true,
+        reply: result.text,
+        conversationId: options.conversationId || 'default'
+      };
+    } catch (error) {
+      console.error('Chat response error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleProvideFeedback(text, feedbackType = 'comprehensive') {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.provideFeedback(text, feedbackType);
+      return {
+        success: true,
+        feedback: result.text
+      };
+    } catch (error) {
+      console.error('Feedback generation error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleExplainConcept(concept, level = 'intermediate') {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.explainWritingConcept(concept, level);
+      return {
+        success: true,
+        explanation: result.text
+      };
+    } catch (error) {
+      console.error('Concept explanation error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // Enhanced Writing Feature Handlers
+  async handleHumanizeText(text, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.humanizeText(text, options);
+      
+      // Update session stats
+      this.sessionData.corrections = (this.sessionData.corrections || 0) + 1;
+      await this.saveSessionData();
+      
+      return {
+        success: true,
+        humanizedText: result.text
+      };
+    } catch (error) {
+      console.error('Text humanization error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleEnhanceStyle(text, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.styleEnhancement(text, options);
+      
+      // Update session stats
+      this.sessionData.suggestions = (this.sessionData.suggestions || 0) + 1;
+      await this.saveSessionData();
+      
+      return {
+        success: true,
+        enhancedText: result.text
+      };
+    } catch (error) {
+      console.error('Style enhancement error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleAdjustTone(text, targetTone, options = {}) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.adjustTone(text, targetTone, options);
+      return {
+        success: true,
+        adjustedText: result.text,
+        appliedTone: targetTone
+      };
+    } catch (error) {
+      console.error('Tone adjustment error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleAnalyzeReadability(text) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.analyzeReadability(text);
+      return {
+        success: true,
+        analysis: result.text
+      };
+    } catch (error) {
+      console.error('Readability analysis error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  async handleDetectPlagiarism(text) {
+    if (!this.geminiService) {
+      return { success: false, error: 'AI service not available' };
+    }
+
+    try {
+      const result = await this.geminiService.detectPlagiarism(text);
+      return {
+        success: true,
+        analysis: result.text
+      };
+    } catch (error) {
+      console.error('Plagiarism detection error:', error);
+      return { success: false, error: error.message };
     }
   }
 

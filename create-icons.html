@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Writing Assistant Icon Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .icon-preview {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+        .icon-size {
+            text-align: center;
+        }
+        .icon-size h3 {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        .download-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        button {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #3367d6;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #1a73e8;
+        }
+        .instructions ol {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 AI Writing Assistant Icon Generator</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ol>
+                <li>Click "Generate Icons" to create professional icons</li>
+                <li>Right-click on each canvas and select "Save image as..."</li>
+                <li>Save with the following names:
+                    <ul>
+                        <li>16×16 → <code>icon16.png</code></li>
+                        <li>48×48 → <code>icon48.png</code></li>
+                        <li>128×128 → <code>icon128.png</code></li>
+                    </ul>
+                </li>
+                <li>Place all PNG files in the <code>icons/</code> folder</li>
+            </ol>
+        </div>
+
+        <div class="icon-preview">
+            <div class="icon-size">
+                <h3>16×16 (Toolbar)</h3>
+                <canvas id="icon16" width="16" height="16"></canvas>
+            </div>
+            <div class="icon-size">
+                <h3>48×48 (Extension Manager)</h3>
+                <canvas id="icon48" width="48" height="48"></canvas>
+            </div>
+            <div class="icon-size">
+                <h3>128×128 (Chrome Web Store)</h3>
+                <canvas id="icon128" width="128" height="128"></canvas>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <button onclick="generateIcons()">🎯 Generate Icons</button>
+            <button onclick="downloadAll()">📥 Download All Icons</button>
+        </div>
+
+        <div class="instructions">
+            <h3>🎨 Icon Design:</h3>
+            <p>The icons feature a modern gradient background with a stylized AI writing symbol, representing:</p>
+            <ul>
+                <li>🤖 AI Technology (Blue gradient)</li>
+                <li>✨ Writing Enhancement (Sparkle symbol)</li>
+                <li>📝 Text Processing (Clean, modern design)</li>
+                <li>🚀 Professional Quality (Polished appearance)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function generateIcons() {
+            // Generate 16x16 icon
+            const canvas16 = document.getElementById('icon16');
+            const ctx16 = canvas16.getContext('2d');
+            drawIcon(ctx16, 16);
+
+            // Generate 48x48 icon
+            const canvas48 = document.getElementById('icon48');
+            const ctx48 = canvas48.getContext('2d');
+            drawIcon(ctx48, 48);
+
+            // Generate 128x128 icon
+            const canvas128 = document.getElementById('icon128');
+            const ctx128 = canvas128.getContext('2d');
+            drawIcon(ctx128, 128);
+        }
+
+        function drawIcon(ctx, size) {
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#4285f4');
+            gradient.addColorStop(0.5, '#1a73e8');
+            gradient.addColorStop(1, '#1557b0');
+
+            // Draw background with rounded corners
+            const radius = Math.max(2, size * 0.15);
+            ctx.fillStyle = gradient;
+            roundRect(ctx, 0, 0, size, size, radius);
+            ctx.fill();
+
+            // Draw AI writing symbol
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+            
+            if (size >= 48) {
+                // Large icon - detailed design
+                drawDetailedIcon(ctx, size);
+            } else {
+                // Small icon - simplified design
+                drawSimpleIcon(ctx, size);
+            }
+        }
+
+        function drawDetailedIcon(ctx, size) {
+            const center = size / 2;
+            const scale = size / 128;
+
+            // Draw pen/pencil symbol
+            ctx.lineWidth = 3 * scale;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'white';
+
+            // Pen body
+            ctx.beginPath();
+            ctx.moveTo(center - 15 * scale, center + 20 * scale);
+            ctx.lineTo(center + 10 * scale, center - 20 * scale);
+            ctx.stroke();
+
+            // Pen tip
+            ctx.beginPath();
+            ctx.moveTo(center + 10 * scale, center - 20 * scale);
+            ctx.lineTo(center + 18 * scale, center - 28 * scale);
+            ctx.stroke();
+
+            // Add sparkle effects
+            drawSparkle(ctx, center - 20 * scale, center - 10 * scale, 4 * scale);
+            drawSparkle(ctx, center + 20 * scale, center + 5 * scale, 3 * scale);
+            drawSparkle(ctx, center - 5 * scale, center + 25 * scale, 2 * scale);
+
+            // Add AI circuit pattern
+            ctx.lineWidth = 1.5 * scale;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+            
+            // Circuit lines
+            ctx.beginPath();
+            ctx.moveTo(center - 25 * scale, center + 10 * scale);
+            ctx.lineTo(center - 15 * scale, center + 10 * scale);
+            ctx.lineTo(center - 15 * scale, center + 5 * scale);
+            ctx.lineTo(center - 5 * scale, center + 5 * scale);
+            ctx.stroke();
+
+            // Circuit nodes
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            ctx.arc(center - 25 * scale, center + 10 * scale, 1.5 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(center - 5 * scale, center + 5 * scale, 1.5 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawSimpleIcon(ctx, size) {
+            const center = size / 2;
+            const scale = size / 16;
+
+            // Simple pen icon
+            ctx.fillStyle = 'white';
+            ctx.fillRect(center - 2 * scale, center - 4 * scale, 4 * scale, 8 * scale);
+            
+            // Pen tip
+            ctx.beginPath();
+            ctx.moveTo(center - 2 * scale, center + 4 * scale);
+            ctx.lineTo(center, center + 6 * scale);
+            ctx.lineTo(center + 2 * scale, center + 4 * scale);
+            ctx.fill();
+
+            // Simple sparkle
+            drawSparkle(ctx, center + 3 * scale, center - 3 * scale, 1.5 * scale);
+        }
+
+        function drawSparkle(ctx, x, y, size) {
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            
+            // Create sparkle shape
+            const points = 8;
+            const outerRadius = size;
+            const innerRadius = size * 0.4;
+            
+            for (let i = 0; i < points * 2; i++) {
+                const angle = (i * Math.PI) / points;
+                const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                const px = x + Math.cos(angle) * radius;
+                const py = y + Math.sin(angle) * radius;
+                
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAll() {
+            downloadCanvas(document.getElementById('icon16'), 'icon16.png');
+            downloadCanvas(document.getElementById('icon48'), 'icon48.png');
+            downloadCanvas(document.getElementById('icon128'), 'icon128.png');
+        }
+
+        // Generate icons on page load
+        window.onload = function() {
+            generateIcons();
+        };
+    </script>
+</body>
+</html>
