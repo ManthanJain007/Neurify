@@ -80,27 +80,6 @@
         "mac": "Command+Shift+S"
       },
       "description": "Enhance writing style"
-    },
-    "adjust-tone": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+T",
-        "mac": "Command+Shift+T"
-      },
-      "description": "Adjust text tone"
-    },
-    "quick-fix": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "Command+Shift+F"
-      },
-      "description": "Apply quick fixes to selected text"
-    },
-    "analyze-readability": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+R",
-        "mac": "Command+Shift+R"
-      },
-      "description": "Analyze text readability"
     }
   },
   

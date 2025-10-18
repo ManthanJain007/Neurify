@@ -3,7 +3,7 @@
 
 class GeminiAPIService {
   constructor() {
-    this.apiKey = null;
+    this.apiKey = window.PRODUCTION_CONFIG?.GEMINI_API_KEY || 'AIzaSyB6xR1anuTx-HTPv-EoFBjPPTyVdtf3sYQ';
     this.baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
     this.model = 'gemini-1.5-flash-latest';
     this.initialized = false;
@@ -26,10 +26,20 @@ class GeminiAPIService {
       averageResponseTime: 0,
       featuresUsed: new Map()
     };
+
+    // Initialize immediately with available API key
+    if (this.apiKey) {
+      this.initialize(this.apiKey).catch(error => {
+        console.warn('Auto-initialization failed:', error);
+      });
+    }
   }
 
-  async initialize(apiKey) {
-    this.apiKey = apiKey;
+  async initialize(apiKey = null) {
+    if (apiKey) {
+      this.apiKey = apiKey;
+    }
+    
     if (!this.apiKey) {
       console.warn('Gemini API key not provided. Please set it in extension options.');
       return false;
@@ -95,7 +105,8 @@ ${this.prompts.grammarCheck.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.1,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'grammarCheck'
     });
   }
 
@@ -117,7 +128,8 @@ ${this.prompts.spelling.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.1,
-      maxOutputTokens: 1500
+      maxOutputTokens: 1500,
+      featureType: 'spelling'
     });
   }
 
@@ -142,7 +154,8 @@ ${this.prompts.styleEnhancement.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.3,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'styleEnhancement'
     });
   }
 
@@ -167,7 +180,8 @@ ${this.prompts.humanization.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.7,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'humanization'
     });
   }
 
@@ -196,7 +210,8 @@ ${this.prompts.toneDetection.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.2,
-      maxOutputTokens: 1000
+      maxOutputTokens: 1000,
+      featureType: 'toneDetection'
     });
   }
 
@@ -221,7 +236,8 @@ ${this.prompts.toneAdjustment.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.4,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'toneAdjustment'
     });
   }
 
@@ -244,7 +260,8 @@ ${this.prompts.personaWriting.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.5,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'personaWriting'
     });
   }
 
@@ -279,7 +296,8 @@ ${this.prompts.realTimeAnalysis.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.2,
-      maxOutputTokens: 1500
+      maxOutputTokens: 1500,
+      featureType: 'realTimeAnalysis'
     });
   }
 
@@ -303,7 +321,8 @@ ${this.prompts.smartSuggestions.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.4,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'smartSuggestions'
     });
   }
 
@@ -348,7 +367,8 @@ ${this.prompts.contentOptimization.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.3,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'contentOptimization'
     });
   }
 
@@ -377,7 +397,8 @@ ${this.prompts.quickActions.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.2,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'quickActions'
     });
   }
 
@@ -420,7 +441,8 @@ ${this.prompts.analytics.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.1,
-      maxOutputTokens: 3000
+      maxOutputTokens: 3000,
+      featureType: 'analytics'
     });
   }
 
@@ -454,7 +476,8 @@ ${this.prompts.contextAdaptation.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.4,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'contextAdaptation'
     });
   }
 
@@ -523,7 +546,8 @@ ${this.prompts.personalization.instructions}`;
 
     return await this.generateContent(prompt, {
       temperature: 0.3,
-      maxOutputTokens: 2000
+      maxOutputTokens: 2000,
+      featureType: 'personalization'
     });
   }
 
@@ -658,7 +682,7 @@ ${this.prompts.personalization.instructions}`;
     };
   }
 
-  async learnFromCorrections(originalText, correctedText, userChoice, context = {}) {
+  async learnFromUserCorrections(originalText, correctedText, userChoice, context = {}) {
     const learningEntry = {
       timestamp: Date.now(),
       originalText,
